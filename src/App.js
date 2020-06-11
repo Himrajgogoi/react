@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Main from './components/Maincomponent';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
 class App extends Component {
 
 
     render() {
         return ( <
+            BrowserRouter >
+            <
             div >
 
             <
@@ -13,7 +16,7 @@ class App extends Component {
             >
             <
             /
-            div >
+            div > < /BrowserRouter>
         );
     }
 
