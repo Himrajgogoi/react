@@ -1,15 +1,32 @@
 import React from 'react';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function Contact(props) {
     return ( <
         div className = "container" >
         <
+        div className = "row" >
+        <
+        Breadcrumb >
+        <
+        BreadcrumbItem > < Link to = '/Home' > Home < /Link></BreadcrumbItem >
+        <
+        BreadcrumbItem active > Contact Us < /BreadcrumbItem> < /
+        Breadcrumb >
+        <
+        div className = "col-12" >
+        <
+        h3 > Menu < /h3> <
+        hr / > < /div> < /
+        div >
+        <
         div className = "row row-content" >
         <
         div className = "col-12" >
         <
-        h3 > Location Information < /h3> <
-        /div> <
+        h3 > Location Information < /h3> < /
+        div > <
         div className = "col-12 col-sm-4 offset-sm-1" >
         <
         h5 > Our Address < /h5> <
@@ -24,12 +41,12 @@ function Contact(props) {
         <
         i className = "fa fa-envelope" > < /i>: <a href="mailto:confusion@food.net">confusion@food.net</a >
         <
-        /address> <
-        /div> <
+        /address> < /
+        div > <
         div className = "col-12 col-sm-6 offset-sm-1" >
         <
-        h5 > Map of our Location < /h5> <
-        /div> <
+        h5 > Map of our Location < /h5> < /
+        div > <
         div className = "col-12 col-sm-11 offset-sm-1" >
         <
         div className = "btn-group"
@@ -46,10 +63,10 @@ function Contact(props) {
         className = "btn btn-success"
         href = "mailto:confusion@food.net" > < i className = "fa fa-envelope-o" > < /i> Email</a >
         <
-        /div> <
-        /div> <
-        /div> <
-        /div>
+        /div> < /
+        div > <
+        /div> < /
+        div >
     );
 }
 
