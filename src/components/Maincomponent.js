@@ -4,6 +4,7 @@ import Footer from './footercomponent';
 import Menu from './menucomponents';
 import Contact from './contactcomponent';
 import Home from './homecomponent';
+import About from './aboutcomponent';
 import DishDetails from './DishDetailcomponents';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
@@ -39,6 +40,12 @@ class Main extends Component {
                 />
             );
         }
+        const Aboutus = () => {
+            return ( <
+                About leaders = { this.state.leaders }
+                />
+            );
+        }
         return ( <
             div >
             <
@@ -48,6 +55,9 @@ class Main extends Component {
             <
             Route path = "/home"
             component = { HomePage }
+            /> <
+            Route path = '/aboutus'
+            component = { Aboutus }
             />  <
             Route exact path = "/contactus"
             component = { Contact }
