@@ -7,7 +7,7 @@ export const initialState = {
     dishes: DISHES,
     comments: COMMENTS,
     leaders: LEADERS,
-    promotions: PROMOTIONS,
+    promotions: PROMOTIONS
 
 };
 
