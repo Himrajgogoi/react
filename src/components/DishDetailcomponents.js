@@ -1,7 +1,12 @@
-import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardBody, CardText, CardTitle } from 'reactstrap';
+import React, { Component } from 'react';
+import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardBody, CardText, CardTitle, Modal, ModalBody, ModalHeader, Row, Col, Button, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control, LocalForm, Errors } from 'react-redux-form';
+import { addComment } from '../redux/ActionCreators';
 
+
+const minLength = (len) => (val) => (val) && (val.length >= len);
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
 
 function RenderDish({ dish }) {
     return ( <
@@ -22,23 +27,157 @@ function RenderDish({ dish }) {
 
     }
 
-    function RenderComments({ comments }) {
+    function RenderComments({ comments, dishid, addComment }) {
+
+        const comment = comments.map((comment) => {
+            return ( <
+                div >
+                <
+                ul className = "list-unstyled" >
+                <
+                li className = "mt-4" > { comment.comment } < /li>   <
+                li className = "mt-4" > --{ comment.author }, { new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date))) } < /li>  < /
+                ul > <
+                /div> 
+            );
+        });
+
         return ( < div > < h4 > Comments < /h4> <
-            ul className = "list-unstyled" >
-            <
-            li className = "mt-4" > { comments[0].comment } < /li>  <
-            li className = "mt-4" > --{ comments[0].author }, { new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comments[0].date))) } < /li>  <
-            li className = "mt-4" > { comments[1].comment } < /li>  <
-            li className = "mt-4" > --{ comments[1].author }, { new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comments[1].date))) } < /li>  <
-            li className = "mt-4" > { comments[2].comment } < /li>  <
-            li className = "mt-4" > --{ comments[2].author }, { new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comments[2].date))) } <
-            /li>  <
-            li className = "mt-4" > { comments[3].comment } < /li>  <
-            li className = "mt-4" > --{ comments[3].author }, { new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comments[3].date))) } < /li>  <
-            li className = "mt-4" > { comments[4].comment } < /li>  <
-            li className = "mt-4" > --{ comments[4].author }, { new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comments[4].date))) } < /li> < /
-            ul > < /div >
+            div > { comment } < /div>  <
+            CommentForm dishId = { dishid }
+            addComment = { addComment }
+            /> < /
+            div >
         );
+    }
+    class CommentForm extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                isModalOpen: false
+            };
+            this.toggleModal = this.toggleModal.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+        toggleModal() {
+            this.setState({ isModalOpen: !this.state.isModalOpen });
+        }
+        handleSubmit(values) {
+            this.toggleModal();
+
+            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        }
+        render() {
+            return ( <
+                div className = "container" >
+                <
+                div className = "row" >
+                <
+                div className = "col-12 col-md-6" >
+                <
+                Modal isOpen = { this.state.isModalOpen }
+                toggle = { this.toggleModal } >
+                <
+                ModalHeader toggle = { this.toggleModal } > Submit Comment < /ModalHeader> <
+                ModalBody >
+                <
+                LocalForm onSubmit = {
+                    (values) => this.handleSubmit(values)
+                } >
+                <
+                Row classname = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                h6 > rating < /h6> < /
+                Col > <
+                /Row> <
+                Row className = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                Control.select model = ".rating"
+                name = "rating"
+                className = "form-control" >
+                <
+                option > 1 < /option> <
+                option > 2 < /option> <
+                option > 3 < /option> <
+                option > 4 < /option> <
+                option > 5 < /option> < /
+                Control.select > < /Col >
+
+                <
+                /Row> <
+                Row className = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                h6 > Your Name < /h6> < /
+                Col > <
+                /Row> <
+                Row className = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                Control.text model = ".author"
+                name = "author"
+                id = "author"
+                className = "form-control"
+                validators = {
+                    {
+
+                        minLength: minLength(3),
+                        maxLength: maxLength(15)
+                    }
+                }
+                /> <
+                Errors className = "text-danger"
+                model = ".author"
+                show = "touched"
+                messages = {
+                    { minLength: " Must have atleast 3 characters", maxLength: "Must have less than or equal to 15 characters" }
+                } > < /Errors> < /
+                Col > < /
+                Row > <
+                Row className = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                h6 > Comment < /h6> < /
+                Col > <
+                /Row> <
+                Row className = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                Control.textarea model = ".comment"
+                name = "comment"
+                rows = "12"
+                className = "form-control" / >
+                <
+                /Col> < /
+                Row >
+                <
+                Row className = "form-group" >
+                <
+                Col md = { 12 } >
+                <
+                Button type = "submit"
+                color = "primary" > Submit < /Button> < /
+                Col > <
+                /Row> < /
+                LocalForm > < /ModalBody > < /
+                Modal > <
+                /div> < /
+                div > <
+                div className = "row" >
+                <
+                Button outline onClick = { this.toggleModal } > < span className = "fa fa-pencil fa-lg" > < /span> Comment < /Button > < /
+                div > <
+                /div>
+            );
+        }
     }
     const DishDetails = (props) => {
             console.log("dishdetail component did render invoked");
@@ -66,8 +205,12 @@ function RenderDish({ dish }) {
                     />< /
                     div > <
                     div className = "col-12 col-md-5 m-1" > < RenderComments comments = { props.comments }
-                    />< /
+                    addComment = { props.addComment }
+                    dishid = { props.dish.id }
+
+                    />   < /
                     div >
+
 
                     <
                     /div> < /
