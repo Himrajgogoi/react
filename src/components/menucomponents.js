@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './loadingcomponent';
+import { baseUrl } from '../shared/baseUrl'
 
 function RenderMenuItem({ dish, onClick }) {
     return ( <
@@ -11,7 +12,7 @@ function RenderMenuItem({ dish, onClick }) {
 
         <
         CardImg width = "100%"
-        src = { dish.image }
+        src = { baseUrl + dish.image }
         alt = { dish.name }
         />   <
         CardImgOverlay >
@@ -43,8 +44,8 @@ const Menu = (props) => {
             <
             Loading / >
             <
-            /div> <
-            /div>
+            /div> < /
+            div >
         );
     } else if (props.dishes.errMess) {
         return (
@@ -54,8 +55,8 @@ const Menu = (props) => {
             <
             div className = "row" >
             <
-            h4 > { props.dishes.errMess } < /h4> <
-            /div> <
+            h4 > { props.dishes.errMess } < /h4> < /
+            div > <
             /div>
         );
     } else {

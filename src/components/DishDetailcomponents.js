@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { addComment } from '../redux/ActionCreators';
 import { Loading } from './loadingcomponent';
-
+import { baseUrl } from '../shared/baseUrl'
 
 const minLength = (len) => (val) => (val) && (val.length >= len);
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -14,7 +14,7 @@ function RenderDish({ dish }) {
         Card >
         <
         CardImg width = "100%"
-        src = { dish.image }
+        src = { baseUrl + dish.image }
         alt = { dish.name } >
 
         <
@@ -189,8 +189,8 @@ function RenderDish({ dish }) {
                     <
                     Loading / >
                     <
-                    /div> <
-                    /div>
+                    /div> < /
+                    div >
                 );
             } else if (props.errMess) {
                 return (
@@ -200,8 +200,8 @@ function RenderDish({ dish }) {
                     <
                     div className = "row" >
                     <
-                    h4 > { props.errMess } < /h4> <
-                    /div> <
+                    h4 > { props.errMess } < /h4> < /
+                    div > <
                     /div>
                 );
             } else if (props.dish != null) {
