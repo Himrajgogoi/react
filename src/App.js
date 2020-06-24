@@ -17,14 +17,13 @@ class App extends Component {
             BrowserRouter >
             <
             div >
-
             <
             Main /
             >
             <
-            /
-            div > < /BrowserRouter> <
-            /Provider>
+            /div> <
+            /BrowserRouter> < /
+            Provider >
         );
     }
 
