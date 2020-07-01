@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Control, Form, Errors, actions } from 'react-redux-form';
+import { Control, Form, Errors } from 'react-redux-form';
 
 
 const required = (val) => val && val.length;
@@ -20,9 +20,9 @@ class Contact extends Component {
     }
 
     handleSubmit(values) {
-        console.log("Current state is:" + JSON.stringify(values));
-        alert("Current state is:" + JSON.stringify(values));
+        this.props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree, values.contactType, values.message);
         this.props.resetFeedbackForm();
+
 
     }
 
@@ -77,16 +77,16 @@ class Contact extends Component {
             div className = "btn-group"
             role = "group" >
             <
-            a role = "button"
+            Link role = "button"
             className = "btn btn-primary"
-            href = "tel:+85212345678" > < i className = "fa fa-phone" > < /i> Call</a >
+            to = "tel:+85212345678" > < i className = "fa fa-phone" > < /i> Call</Link >
             <
-            a role = "button"
-            className = "btn btn-info" > < i className = "fa fa-skype" > < /i> Skype</a >
+            Link role = "button"
+            className = "btn btn-info" > < i className = "fa fa-skype" > < /i> Skype</Link >
             <
-            a role = "button"
+            Link role = "button"
             className = "btn btn-success"
-            href = "mailto:confusion@food.net" > < i className = "fa fa-envelope-o" > < /i> Email</a >
+            to = "mailto:confusion@food.net" > < i className = "fa fa-envelope-o" > < /i> Email</Link >
             <
             /div> < /
             div > <

@@ -1,15 +1,23 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media, Img } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './loadingcomponent';
+import { baseUrl } from '../shared/baseUrl';
+import { Fade, Stagger } from 'react-animation-components';
 
 function RenderLeader({ leaders }) {
-    const leader = leaders.map((leader) => {
+    const leader = leaders.leaders.map((leader) => {
         return ( <
             div >
             <
-            Media tag = "li" >
+            Stagger in >
             <
-            Media object src = { leader.image }
+            Media tag = "li" >
+
+            <
+            Fade in >
+            <
+            Media object src = { baseUrl + leader.image }
             alt = { leader.name }
             /> <
             Media body className = "ml-5" >
@@ -20,15 +28,44 @@ function RenderLeader({ leaders }) {
                 leader.designation
             } < /h6>  < /Media > <
             p > { leader.description } < /p>  < /
-            Media > <
-            /Media> < /
+            Media >
+            <
+            /Fade> < /
+            Media >
+            <
+            /Stagger> < /
             div >
 
         );
     });
-    return ( <
-        div > { leader } < /div>
-    );
+    if (leaders.isLoading) {
+        return ( <
+            div className = "container" >
+            <
+            div className = "row" >
+            <
+            Loading / >
+            <
+            /div> < /
+            div > );
+    } else if (leaders.errMess) {
+        return (
+
+            <
+            div className = "container" >
+            <
+            div className = "row" >
+            <
+            h4 > { leaders.errMess } < /h4> < /
+            div > <
+            /div>
+        );
+    } else {
+        return ( <
+            div > { leader } < /div>
+        );
+
+    }
 
 
 }

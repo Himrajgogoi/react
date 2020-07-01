@@ -33,8 +33,8 @@ function RenderCard({ item, isLoading, errMess }) {
             item.designation ? < CardSubtitle > { item.designation } < /CardSubtitle> : null} <
             CardText > { item.description } < /CardText> < /
             CardBody > <
-            /Card> <
-            /FadeTransform>
+            /Card> < /
+            FadeTransform >
         );
     }
 
@@ -63,6 +63,8 @@ function Home(props) {
         div className = "col-12 col-md m-1" >
         <
         RenderCard item = { props.leader }
+        isLoading = { props.leadersLoading }
+        errMess = { props.leadersErrMess }
         /> < /
         div > <
         /div> < /
